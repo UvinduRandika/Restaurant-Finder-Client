@@ -1,21 +1,28 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import Finder from "../apis/Finder";
+import { Context } from "../Context/Context";
 const New = () => {
+    const {add} = useContext(Context);
+
     const [name, setName] =useState("");
     const [location, setLocation] =useState("");
     const [priceRange, setPriceRange] =useState("Price Range");
 
     const submit = async (e) => {
-        e.prevetDefault()
+       
         try {
-         const response = await Finder.post("/",{
+            const requestBody = {
                 name: name,
                 location: location,
-                price_range: priceRange
-            })
-            console.log(priceRange);
+                price_range: priceRange,
+            };
+            console.log(requestBody);
+         const response = await Finder.post("/",requestBody);
+            add(response.data.data.restaurant);
+           
         } catch (err) {
-            
+           console.log("submit error",err);
+           // alert("submit error",err);
         }
 
     }
@@ -39,7 +46,7 @@ const New = () => {
                     <option value= "5">$$$$$</option>
                    </select>
                 </div>
-                    <button onClick={submit}  type ="submit" className="btn btn-primary">Add New</button>
+                    <button onClick={submit} className="btn btn-primary">Add New</button>
                 
              </div>
         </form>
