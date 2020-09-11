@@ -1,23 +1,42 @@
 import React, {useEffect, useContext} from "react"
 import Finder from "../apis/Finder"
 import { Context } from "../Context/Context"
+import { useHistory } from "react-router-dom";
 
 
 const Show = (props) => {
    const{restaurants, setRestaurant} =useContext(Context);
-
+    let history= useHistory();
 useEffect(() => {
     const data = async () => {
         try {
             const response = await Finder.get("/");
             setRestaurant(response.data.data.restaurants);
-          } catch (err) {
-              
-          }
+          } catch (err) {}
     };
   
     data();
-},[])
+},[]);
+
+const Delete = async (id) =>{
+    console.log(id);
+    try {
+        const response =await Finder.delete(id);
+        setRestaurant(restaurants.filter(restaurant => {
+            return restaurant.id !==id
+        } 
+
+        ))
+        console.log(response);
+    } catch (err) {
+        
+    }
+};
+
+const Update = async (id) =>{
+     history.push("restaurants/"+id+"/update")
+   
+};
    return(
     <div className= "list group">
         <table className="table table-hover table-dark">
@@ -40,8 +59,9 @@ useEffect(() => {
                 <td>{restaurant.location}</td>
                 <td>{"$".repeat(restaurant.price_range)}</td>
                 <td>reveiw</td>
-                <td><button className="btn btn-warning">Update</button></td>
-                 <td><button className="btn btn-danger">Delete</button></td>
+                <td><button onClick={() =>Update(restaurant.id)} className="btn btn-warning">Update</button></td>
+                 <td><button onClick={() =>Delete(restaurant.id)} className="btn btn-danger">Delete</button></td>
+                 
 
             </tr>
                )
@@ -56,3 +76,4 @@ useEffect(() => {
 }
 
 export default Show
+

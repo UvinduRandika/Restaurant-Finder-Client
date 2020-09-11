@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import Restaurants from "./routes/Restaurants";
-import Update from "./routes/Update";
+import Update from "./routes/UpdateR";
 import Home from "./routes/Home";
 import { ContextProvider } from "./Context/Context";
 
