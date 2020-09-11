@@ -11,13 +11,11 @@ useEffect(() => {
         try {
             const response = await Finder.get("/");
             setRestaurant(response.data.data.restaurants);
-          } catch (err) {
-              
-          }
+          } catch (err) {}
     };
   
     data();
-},[])
+},[]);
    return(
     <div className= "list group">
         <table className="table table-hover table-dark">
