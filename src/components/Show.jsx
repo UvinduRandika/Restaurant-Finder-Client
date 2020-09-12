@@ -12,6 +12,7 @@ useEffect(() => {
         try {
             const response = await Finder.get("/");
             setRestaurant(response.data.data.restaurants);
+            console.log(response.data.data);
           } catch (err) {}
     };
   
@@ -30,7 +31,7 @@ const Delete = async (id) =>{
         console.log(response);
     } catch (err) {
         
-    }
+    }   
 };
 
 const Update = async (id) =>{

@@ -1,27 +1,68 @@
 
-import React, { useState } from "react"
-import { useParams } from "react-router-dom";
-
+import React, { useState, useEffect, useContext } from "react"
+import { useParams, useHistory } from "react-router-dom";
+import Finder from "../apis/Finder"
+import { Context } from "../Context/Context";
 
 const Update = (props) => {
 const {id} =useParams();
+let history =useHistory();
+const {restaurants} =useContext(Context);
 const [priceRange, setPriceRange] =useState("Price Range");
-console.log(id);
+const [name, setName] =useState("");
+
+const [location, setLocation] =useState("");
+ 
+useEffect(() => {
+    const data = async () => {
+        try { 
+            const response = await Finder.get("/"+id);
+           
+            console.log(restaurants[0].name);
+ 
+            setName(response.data.data.restaurant.name)
+            setLocation(response.data.data.restaurant.location)
+            setPriceRange(response.data.data.restaurant.price_range)
+            console.log("setName");
+ 
+          //  setRestaurant(response.data.data.restaurants);
+          } catch (err) {}
+    };
+  
+    data();
+},[]);
+
+const submit = async (e) => {
+       
+    e.preventDefault();
+        const requestBody = {
+            name,
+            location,
+            price_range: priceRange,
+        };
+        console.log(requestBody);
+     const updateRes = await Finder.put("/"+id,requestBody);
+     
+       
+     history.push("/");   
+       
+
+}
     return(
         <div>
             <h1 className="text-center">Update Restaurant</h1>
-            <form  action="">
+            <form action="" >
                 <div className="form-group">
 
-                    <label htmlFor="name">name</label><hr/>
-                    <input id="name" classname="form-control" type="text"/>
+                    <label htmlFor="name">name</label>
+                    <input value= {name} onChange={e => setName(e.target.value)} id="name" className="form-control" type="text"/>
 
                 </div>
                  <div className="form-group">
-
+               
                     <label htmlFor="location">location</label>
-                    <input id="location" classname="form-control" type="text"/>
-
+                    < input value= {location} onChange={e => setLocation(e.target.value)} id="location" className="form-control" type="text"/>
+                 
                 </div>
                 <div className="form-group">
 
@@ -35,7 +76,10 @@ console.log(id);
                     <option value= "5">$$$$$</option>
                    </select>
 
+
+                  
                 </div>    
+                <button onClick={submit} className ="btn btn-primary">Submit</button>
 
             </form>
         </div>
