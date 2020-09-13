@@ -19,8 +19,9 @@ useEffect(() => {
     data();
 },[]);
 
-const Delete = async (id) =>{
+const Delete = async (e, id) =>{
     console.log(id);
+    e.stopPropagation();
     try {
         const response =await Finder.delete(id);
         setRestaurant(restaurants.filter(restaurant => {
@@ -34,7 +35,17 @@ const Delete = async (id) =>{
     }   
 };
 
-const Update = async (id) =>{
+
+const Select = async (e, id) =>{
+    console.log(id);
+    e.stopPropagation();
+    history.push("restaurants/"+id)
+   
+};
+
+const Update = async (e, id) =>{
+    console.log(id);
+    e.stopPropagation();
      history.push("restaurants/"+id+"/update")
    
 };
@@ -55,13 +66,13 @@ const Update = async (id) =>{
         <tbody>
            {restaurants.map(restaurant => {
                return(
-                <tr key={restaurants.id}>
+                <tr onClick={(e) =>Select(e, restaurant.id)} key={restaurants.id}>
                 <td>{restaurant.name}</td>
                 <td>{restaurant.location}</td>
                 <td>{"$".repeat(restaurant.price_range)}</td>
                 <td>reveiw</td>
-                <td><button onClick={() =>Update(restaurant.id)} className="btn btn-warning">Update</button></td>
-                 <td><button onClick={() =>Delete(restaurant.id)} className="btn btn-danger">Delete</button></td>
+                <td><button onClick={(e) =>Update(e, restaurant.id)} className="btn btn-warning">Update</button></td>
+                 <td><button onClick={(e) =>Delete(e, restaurant.id)} className="btn btn-danger">Delete</button></td>
                  
 
             </tr>

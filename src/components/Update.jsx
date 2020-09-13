@@ -18,12 +18,12 @@ useEffect(() => {
         try { 
             const response = await Finder.get("/"+id);
            
-            console.log(restaurants[0].name);
+            console.log(response.data.data.restaurants.name);
  
-            setName(response.data.data.restaurant.name)
-            setLocation(response.data.data.restaurant.location)
-            setPriceRange(response.data.data.restaurant.price_range)
-            console.log("setName");
+            setName(response.data.data.restaurants.name)
+            setLocation(response.data.data.restaurants.location)
+            setPriceRange(response.data.data.restaurants.price_range)
+            
  
           //  setRestaurant(response.data.data.restaurants);
           } catch (err) {}
