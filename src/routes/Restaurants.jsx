@@ -17,7 +17,7 @@ const Restaurants = () => {
                  const response = await Finder.get("/" + id);
 
                  setSelectedRestaurant(response.data.data);
-                 console.log(response.data.data.res);
+                 console.log(selectedRestaurant);  
              } catch (err) {
                  console.log(err);
              }
