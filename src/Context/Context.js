@@ -5,7 +5,7 @@ export const Context = createContext();
 
 export const ContextProvider = props => {
     const [restaurants, setRestaurant] = useState([]);
-    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+    const [selectedRestaurant, setSelectedRestaurant] = useState("");
 
     const add = (restaurant) => {
         setRestaurant([...restaurants, restaurant]);

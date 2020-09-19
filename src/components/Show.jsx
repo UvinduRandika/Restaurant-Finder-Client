@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react"
 import Finder from "../apis/Finder"
 import { Context } from "../Context/Context"
 import { useHistory } from "react-router-dom";
+import StarRating from "./StarRating";
 
 
 const Show = (props) => {
@@ -39,16 +40,27 @@ const Show = (props) => {
 
 
     const Select = async (e, id) => {
-        console.log(id);
+
         e.stopPropagation();
         history.push("restaurants/" + id)
 
     };
 
     const Update = async (e, id) => {
-        console.log(id);
+
         e.stopPropagation();
         history.push("restaurants/" + id + "/update")
+
+    };
+
+    const review = async (restaurant) => {
+
+        return (restaurant &&
+            <>
+                <StarRating rating={restaurant.id} />
+                <span className="text-warning ml-1">{restaurant.count}</span>
+            </>
+        );
 
     };
     return (
@@ -67,12 +79,18 @@ const Show = (props) => {
                 </thead>
                 <tbody>
                     {restaurants.map(restaurant => {
+                        
                         return (
+                            
                             <tr onClick={(e) => Select(e, restaurant.id)} key={restaurants.id}>
                                 <td>{restaurant.name}</td>
                                 <td>{restaurant.location}</td>
                                 <td>{"$".repeat(restaurant.price_range)}</td>
-                                <td>reveiw</td>
+                                <td>  <> 
+                                    <StarRating rating={restaurant.average_rating} />
+                                    <span className="text-warning ml-1">({restaurant.count})</span>
+                                    </>
+                                </td>
                                 <td><button onClick={(e) => Update(e, restaurant.id)} className="btn btn-warning">Update</button></td>
                                 <td><button onClick={(e) => Delete(e, restaurant.id)} className="btn btn-danger">Delete</button></td>
 

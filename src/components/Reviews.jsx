@@ -16,7 +16,7 @@ const Reviews = ({reviews}) => {
   
                   </div>
                   <div className="card-body">
-                <p className="card-text">{review.review}</p>
+                <p className="card-text">{review.review }</p>
                   </div>
   
               </div>

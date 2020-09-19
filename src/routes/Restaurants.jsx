@@ -17,7 +17,7 @@ const Restaurants = () => {
                  const response = await Finder.get("/" + id);
 
                  setSelectedRestaurant(response.data.data);
-                 console.log(selectedRestaurant);  
+                 console.log(selectedRestaurant.restaurants);  
              } catch (err) {
                  console.log(err);
              }
@@ -25,26 +25,7 @@ const Restaurants = () => {
 
          }
          data();
-       /* const res = {
-            restaurant : {
-              name: "sdfgh",
-              average_rating: 4,
-              count: 5
-            },
-            reviews : [
-              {
-                id: 1,
-                restaurant_id: 5,
-                name: "dfgh",
-                review: "dfghjklfvgbhjhn",
-                rating: 1
-              }
-            ]
-          };
-      
-          setSelectedRestaurant(res);
-
-          console.log(JSON.stringify(selectedRestaurant), 'sdfghjk'); */
+       
     }, []);
 
 
@@ -52,8 +33,18 @@ const Restaurants = () => {
     return <div>
         
             { selectedRestaurant && 
-            (<h1 className="text-center display-1"> {(selectedRestaurant.restaurants.name)}</h1>)
+            (<h1 className="text-center display-1">{selectedRestaurant.restaurants.name}
+             <h4><StarRating rating= {selectedRestaurant.restaurants.average_rating}/>
+             <span className="text-warning ml-1">({selectedRestaurant.restaurants.count})</span>
+             </h4></h1>
+           
+            
+            )
             }
+            <div className="text-center">
+              
+          
+            </div>
             <div className="mt-3">
 
             { selectedRestaurant && (<Reviews reviews={selectedRestaurant.reviews}/>)}
