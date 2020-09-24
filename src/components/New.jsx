@@ -1,20 +1,28 @@
 import React, { useState, useContext } from "react"
 import Finder from "../apis/Finder";
 import { Context } from "../Context/Context";
+
+
 const New = () => {
+   
+   
     const {add} = useContext(Context);
 
     const [name, setName] =useState("");
     const [location, setLocation] =useState("");
     const [priceRange, setPriceRange] =useState("Price Range");
+     
 
     const submit = async (e) => {
+       
+        e.preventDefault();
        
         try {
             const requestBody = {
                 name: name,
                 location: location,
                 price_range: priceRange,
+                
             };
             console.log(requestBody);
          const response = await Finder.post("/",requestBody);
@@ -27,7 +35,9 @@ const New = () => {
 
     }
    return(
+   
     <div className= "mb-5">
+        
         <form action="">
             <div className="form-row">
                 <div className="col">
@@ -46,7 +56,7 @@ const New = () => {
                         <option value= "5">$$$$$</option>
                     </select>
                 </div>
-                    <button onClick={submit} className="btn btn-primary">Add New</button>
+                    <button onClick={(e) => submit(e)} className="btn btn-primary">Add New</button>
                 
              </div>
         </form>
